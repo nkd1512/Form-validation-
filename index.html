@@ -3,52 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ฟอร์มจองตั๋วกิจกรรม</title>
+    <title>คำร้องขอโอนย้ายสาขาวิชา</title>
     <style>
         /* CSS ที่ปรับแก้ตามโทนสีใหม่ */
         body {
             font-family: Arial, sans-serif;
-            background-color: #535366; /* Slate */
+            background-color: #EAE6E0; /* Canvas */
+            color: #1C1C1C; /* Charcoal */
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding: 20px;
             margin: 0;
         }
 
         .container {
-            background-color: #EAE6E0; /* Canvas */
+            background-color: #FFFFFF; /* White */
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 800px;
         }
 
-        h1 {
+        .header {
             text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #1C1C1C; /* Charcoal */
+        }
+        .header p {
+            font-size: 14px;
+            color: #535366; /* Slate */
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+        
+        .form-section h2 {
+            font-size: 18px;
+            border-bottom: 2px solid #535366; /* Slate */
+            padding-bottom: 5px;
             color: #1C1C1C; /* Charcoal */
         }
 
         .form-group {
-            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            margin-bottom: 15px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
+        .form-group label {
+            width: 100%;
             font-weight: bold;
+            color: #1C1C1C; /* Charcoal */
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"], 
+        .form-group input[type="tel"], 
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #535366; /* Slate */
+            border-radius: 4px;
+            box-sizing: border-box;
             color: #1C1C1C; /* Charcoal */
         }
 
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+        .form-group textarea {
+            min-height: 100px;
+        }
+        
+        .form-group .half-width {
+            width: calc(50% - 10px);
+            margin-right: 20px;
+        }
+        
+        .form-group .half-width:last-child {
+            margin-right: 0;
         }
 
+        .form-group .radio-group label,
+        .form-group .checkbox-group label {
+            display: inline-block;
+            font-weight: normal;
+        }
+        
+        .form-group .radio-group input,
+        .form-group .checkbox-group input {
+            margin-right: 5px;
+        }
+
+        .form-group .inline-field {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group .inline-field label {
+            width: auto;
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+        
+        .form-group .inline-field input {
+            width: auto;
+        }
+        
+        .form-group .inline-field span {
+            margin-left: 10px;
+            color: #1C1C1C; /* Charcoal */
+        }
+
+        .error-message {
+            color: #535366; /* Slate */
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+        
         button {
             width: 100%;
             padding: 12px;
@@ -60,19 +137,13 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-weight: bold;
+            margin-top: 20px;
         }
 
         button:hover {
             background-color: #535366; /* Slate */
         }
-
-        .error-message {
-            color: #1C1C1C; /* Charcoal */
-            font-size: 12px;
-            margin-top: 5px;
-            display: block;
-        }
-
+        
         /* Modal Styling */
         .modal {
             display: none;
@@ -82,7 +153,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -96,6 +167,7 @@
             position: relative;
             width: 80%;
             max-width: 400px;
+            color: #1C1C1C; /* Charcoal */
         }
 
         .close-btn {
@@ -112,57 +184,98 @@
 <body>
 
     <div class="container">
-        <h1>ฟอร์มจองตั๋วกิจกรรม (Event Booking)</h1>
+        <div class="header">
+            <h1>คำร้องขอโอนย้ายสาขาวิชาต่างๆ คณะ</h1>
+            <p>สำหรับหลักสูตร 4 ปี และหลักสูตร 4 ปีเทียบเท่าเรียน (2ปี)</p>
+        </div>
         
-        <form id="bookingForm" novalidate>
+        <form id="transferForm" novalidate>
             <div class="form-group">
-                <label for="name">ชื่อ-นามสกุล:</label>
-                <input type="text" id="name" name="name">
-                <span class="error-message" id="nameError"></span>
+                <label>เรียน คณบดีคณะ (คณะใหม่)</label>
+                <div class="inline-field">
+                    <span>วันที่</span><input type="text"><span>เดือน</span><input type="text"><span>พ.ศ.</span><input type="text">
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="phone">เบอร์โทรศัพท์:</label>
-                <input type="tel" id="phone" name="phone">
+                <label>สิ่งที่ส่งมาด้วย: ใบรายงานผลการศึกษา</label>
+            </div>
+
+            <div class="form-group">
+                <label>ข้าพเจ้า</label>
+                <div class="radio-group">
+                    <input type="radio" id="mr" name="title" value="นาย" checked>
+                    <label for="mr">นาย</label>
+                    <input type="radio" id="mrs" name="title" value="นาง">
+                    <label for="mrs">นาง</label>
+                    <input type="radio" id="miss" name="title" value="นางสาว">
+                    <label for="miss">นางสาว</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">ชื่อ-นามสกุล:</label>
+                <input type="text" id="name" name="name">
+            </div>
+
+            <div class="form-group">
+                <label for="studentId">รหัสนักศึกษา:</label>
+                <input type="text" id="studentId" name="studentId" maxlength="8">
+                <span class="error-message" id="studentIdError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">โทรศัพท์มือถือ:</label>
+                <input type="tel" id="phone" name="phone" maxlength="10">
                 <span class="error-message" id="phoneError"></span>
             </div>
 
             <div class="form-group">
-                <label for="ticketType">เลือกประเภทตั๋ว:</label>
-                <select id="ticketType" name="ticketType">
-                    <option value="ปกติ">ปกติ</option>
-                    <option value="VIP">VIP</option>
-                    <option value="Premium">Premium</option>
-                </select>
+                <label>หลักสูตร</label>
+                <div class="radio-group">
+                    <input type="radio" id="course4" name="course" value="หลักสูตร 4 ปี" checked>
+                    <label for="course4">4 ปี</label>
+                    <input type="radio" id="course42" name="course" value="หลักสูตร 4 ปีเทียบเท่าเรียน (2ปี)">
+                    <label for="course42">4 ปีเทียบเท่าเรียน (2ปี)</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="currentMajor">สาขาวิชา:</label>
+                <input type="text" id="currentMajor" name="currentMajor">
             </div>
 
             <div class="form-group">
-                <label for="ticketNumber">จำนวนตั๋ว:</label>
-                <input type="number" id="ticketNumber" name="ticketNumber" min="1" max="5">
-                <span class="error-message" id="ticketNumberError"></span>
+                <label>มีความประสงค์จะขอโอนย้ายไปสาขาวิชา</label>
+                <input type="text" id="transferMajor" name="transferMajor">
             </div>
-
-            <button type="submit">จองตั๋ว</button>
+            
+            <div class="form-group">
+                <label for="reason">เนื่องจาก:</label>
+                <textarea id="reason" name="reason" rows="4"></textarea>
+                <span class="error-message" id="reasonError"></span>
+            </div>
+            
+            <button type="submit">ส่งคำร้อง</button>
         </form>
     </div>
-
+    
     <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <p id="modalText"></p>
         </div>
     </div>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('bookingForm');
-            const nameInput = document.getElementById('name');
+            const form = document.getElementById('transferForm');
+            const studentIdInput = document.getElementById('studentId');
             const phoneInput = document.getElementById('phone');
-            const ticketTypeSelect = document.getElementById('ticketType');
-            const ticketNumberInput = document.getElementById('ticketNumber');
-            const nameError = document.getElementById('nameError');
+            const reasonInput = document.getElementById('reason');
+            const studentIdError = document.getElementById('studentIdError');
             const phoneError = document.getElementById('phoneError');
-            const ticketNumberError = document.getElementById('ticketNumberError');
+            const reasonError = document.getElementById('reasonError');
             const successModal = document.getElementById('successModal');
             const modalText = document.getElementById('modalText');
             const closeModalBtn = document.querySelector('.close-btn');
@@ -173,51 +286,42 @@
 
                 let isValid = true;
 
-                // 1. Validation: ชื่อ-นามสกุล
-                const nameValue = nameInput.value.trim();
-                const nameParts = nameValue.split(' ').filter(part => part !== '');
-                if (nameParts.length < 2) {
-                    nameError.textContent = 'กรุณากรอกชื่อ-นามสกุลอย่างน้อย 2 คำ';
+                // 1. ตรวจสอบรหัสนักศึกษา: ตัวเลข 8 หลัก และขึ้นต้นด้วย 6 หรือ 7
+                const studentIdValue = studentIdInput.value.trim();
+                if (!/^[6-7]\d{7}$/.test(studentIdValue)) {
+                    studentIdError.textContent = 'รหัสนักศึกษาต้องเป็นตัวเลข 8 หลัก และขึ้นต้นด้วย 6 หรือ 7';
                     isValid = false;
                 }
 
-                // 2. Validation: เบอร์โทรศัพท์
+                // 2. ตรวจสอบเบอร์โทรศัพท์: ตัวเลข 10 หลัก
                 const phoneValue = phoneInput.value.trim();
-                if (!/^\d{10}$/.test(phoneValue) || !phoneValue.startsWith('0')) {
-                    phoneError.textContent = 'เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลักและขึ้นต้นด้วย 0';
+                if (!/^\d{10}$/.test(phoneValue)) {
+                    phoneError.textContent = 'เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก';
+                    isValid = false;
+                }
+                
+                // 3. ตรวจสอบสาเหตุ: ต้องกรอกข้อมูล
+                const reasonValue = reasonInput.value.trim();
+                if (reasonValue === '') {
+                    reasonError.textContent = 'กรุณากรอกสาเหตุการขอโอนย้าย';
                     isValid = false;
                 }
 
-                // 3. Validation: จำนวนตั๋ว
-                const ticketNumberValue = parseInt(ticketNumberInput.value, 10);
-                if (isNaN(ticketNumberValue) || ticketNumberValue < 1 || ticketNumberValue > 5) {
-                    ticketNumberError.textContent = 'จำนวนตั๋วต้องอยู่ระหว่าง 1 ถึง 5';
-                    isValid = false;
-                }
-
-                // 4. Validation: เงื่อนไขพิเศษ VIP/Premium
-                const ticketTypeValue = ticketTypeSelect.value;
-                if ((ticketTypeValue === 'VIP' || ticketTypeValue === 'Premium') && ticketNumberValue > 2) {
-                    ticketNumberError.textContent = 'ประเภท VIP/Premium สามารถจองได้ไม่เกิน 2 ใบ';
-                    isValid = false;
-                }
-
-                // แสดงผลลัพธ์
                 if (isValid) {
-                    showModal(ticketNumberValue, ticketTypeValue);
+                    showModal('ส่งคำร้องสำเร็จ');
                 } else {
                     console.log('Validation failed.');
                 }
             });
 
             function resetErrors() {
-                nameError.textContent = '';
+                studentIdError.textContent = '';
                 phoneError.textContent = '';
-                ticketNumberError.textContent = '';
+                reasonError.textContent = '';
             }
 
-            function showModal(ticketNumber, ticketType) {
-                modalText.textContent = `จองตั๋วสำเร็จ จำนวน: ${ticketNumber} ประเภท: ${ticketType}`;
+            function showModal(text) {
+                modalText.textContent = text;
                 successModal.style.display = 'flex';
             }
 
